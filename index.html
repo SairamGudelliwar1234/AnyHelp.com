@@ -144,8 +144,11 @@
 
     .problem-card img {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
+      height: 250px;
+      object-fit: contain;
+      background-color: rgba(44, 44, 44, 0.5);
+      padding: 1rem;
+      border-radius: 1rem;
       transition: transform 0.3s ease;
     }
 
@@ -215,29 +218,62 @@
 
     .back-button {
       position: fixed;
-      bottom: 1rem;
+      top: 1rem;
       right: 1rem;
-      background: rgba(99, 102, 241, 0.8);
+      background: linear-gradient(45deg, #6366f1, #4f46e5);
       backdrop-filter: blur(10px);
-      padding: 0.5rem 0.8rem;
-      border-radius: 1rem;
+      padding: 0.8rem;
+      border-radius: 0.5rem;
       font-size: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: none;
       transition: all 0.3s ease;
       z-index: 1000;
       display: flex;
       align-items: center;
-      gap: 0.3rem;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
     }
 
     .back-button:hover {
-      background: rgba(79, 70, 229, 0.9);
-      transform: translateY(-2px);
-      box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
     }
 
     .back-button i {
-      font-size: 0.9rem;
+      font-size: 1.3rem;
+      color: white;
+    }
+
+    .feedback-message {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(46, 204, 113, 0.9);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      display: none;
+      animation: slideIn 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    .feedback-message i {
+      margin-right: 0.5rem;
     }
 
     .review-section {
@@ -319,8 +355,11 @@
 
     .therapist-image {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
+      height: 300px;
+      object-fit: contain;
+      border-radius: 1rem 1rem 0 0;
+      background-color: rgba(44, 44, 44, 0.5);
+      padding: 1rem;
     }
 
     .therapist-info {
@@ -367,6 +406,109 @@
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
     }
+
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .solution-card {
+      background: rgba(44, 44, 44, 0.8);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .solution-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .solution-card h3 {
+      color: #6366f1;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .solution-card ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 1rem;
+    }
+
+    .solution-card ul li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #bbb;
+    }
+
+    .solution-card ul li i {
+      color: #6366f1;
+    }
+
+    .references-section {
+      margin-top: 3rem;
+      background: rgba(44, 44, 44, 0.8);
+      padding: 2rem;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .references-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .reference-card {
+      background: rgba(44, 44, 44, 0.5);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .reference-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .reference-card h4 {
+      color: #6366f1;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .reference-card p {
+      color: #bbb;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .reference-link {
+      color: #6366f1;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .reference-link:hover {
+      color: #4f46e5;
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -410,14 +552,66 @@
         description: "Facing financial stress can affect every part of your life. Explore practical tools, budgeting ideas, and emotional support resources to manage financial worries effectively.",
         image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
         solutions: [
-          "Create a detailed budget plan with our interactive budgeting tool",
-          "Learn about debt consolidation strategies and financial planning",
-          "Access government programs and community resources for financial help",
-          "Discover investment strategies for long-term financial stability",
-          "Get personalized financial advice from certified experts",
-          "Learn about emergency fund management and savings techniques",
-          "Explore side hustle opportunities to increase income",
-          "Understand credit score improvement strategies"
+          {
+            title: "Budget Planning",
+            description: "Create a detailed monthly budget to track income and expenses. Use the 50/30/20 rule: 50% for needs, 30% for wants, and 20% for savings.",
+            steps: [
+              "List all sources of income",
+              "Track all monthly expenses",
+              "Categorize expenses into needs and wants",
+              "Set realistic savings goals",
+              "Use budgeting apps to track progress"
+            ]
+          },
+          {
+            title: "Debt Management",
+            description: "Develop a strategic plan to pay off debts efficiently while maintaining financial stability.",
+            steps: [
+              "List all debts with interest rates",
+              "Prioritize high-interest debts",
+              "Consider debt consolidation options",
+              "Set up automatic payments",
+              "Monitor credit score regularly"
+            ]
+          },
+          {
+            title: "Emergency Fund",
+            description: "Build a safety net to handle unexpected expenses without going into debt.",
+            steps: [
+              "Start with small, regular contributions",
+              "Aim for 3-6 months of expenses",
+              "Keep funds in a separate account",
+              "Only use for true emergencies",
+              "Replenish after withdrawals"
+            ]
+          }
+        ],
+        references: [
+          {
+            title: "Financial Planning Guide",
+            url: "https://www.investopedia.com/financial-planning-4689811",
+            description: "Comprehensive guide to financial planning and management"
+          },
+          {
+            title: "Budgeting Tools",
+            url: "https://www.mint.com",
+            description: "Free budgeting and expense tracking tools"
+          },
+          {
+            title: "Debt Management Resources",
+            url: "https://www.nfcc.org",
+            description: "National Foundation for Credit Counseling resources"
+          },
+          {
+            title: "Investment Education",
+            url: "https://www.bogleheads.org",
+            description: "Investment strategies and education"
+          },
+          {
+            title: "Financial Calculators",
+            url: "https://www.bankrate.com/calculators",
+            description: "Various financial calculators for planning"
+          }
         ],
         youtubeQuery: "financial+management+and+debt+relief+strategies",
         inspirationImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
@@ -428,14 +622,66 @@
         description: "Strained relationships can lead to emotional distress. Access tools for healthy communication, rebuilding trust, and working through conflicts.",
         image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
         solutions: [
-          "Learn effective communication techniques for better relationships",
-          "Discover strategies for rebuilding trust and intimacy",
-          "Access professional relationship counseling resources",
-          "Explore conflict resolution methods and techniques",
-          "Understand attachment styles and their impact on relationships",
-          "Get tips for maintaining long-distance relationships",
-          "Learn about healthy boundaries and self-care in relationships",
-          "Discover ways to rekindle romance and connection"
+          {
+            title: "Communication Skills",
+            description: "Develop effective communication techniques to express needs and understand your partner better.",
+            steps: [
+              "Practice active listening",
+              "Use 'I' statements instead of 'you' statements",
+              "Express needs clearly and respectfully",
+              "Learn to manage emotional responses",
+              "Schedule regular check-ins with your partner"
+            ]
+          },
+          {
+            title: "Trust Building",
+            description: "Rebuild and maintain trust in your relationship through consistent actions and open communication.",
+            steps: [
+              "Be honest and transparent",
+              "Keep your promises",
+              "Show reliability in small things",
+              "Respect boundaries",
+              "Be patient with the process"
+            ]
+          },
+          {
+            title: "Conflict Resolution",
+            description: "Learn healthy ways to resolve conflicts and strengthen your relationship.",
+            steps: [
+              "Stay calm during disagreements",
+              "Focus on the issue, not the person",
+              "Find common ground",
+              "Take breaks when needed",
+              "Work together on solutions"
+            ]
+          }
+        ],
+        references: [
+          {
+            title: "Relationship Advice",
+            url: "https://www.psychologytoday.com/us/therapists/relationship-advice",
+            description: "Professional advice for improving relationships"
+          },
+          {
+            title: "Couples Therapy",
+            url: "https://www.psychologytoday.com/us/therapists/couples-therapy",
+            description: "Couples therapy resources and information"
+          },
+          {
+            title: "Family Counseling",
+            url: "https://www.psychologytoday.com/us/therapists/family-counseling",
+            description: "Family counseling resources and information"
+          },
+          {
+            title: "Conflict Resolution",
+            url: "https://www.psychologytoday.com/us/therapists/conflict-resolution",
+            description: "Conflict resolution strategies and techniques"
+          },
+          {
+            title: "Intimacy and Connection",
+            url: "https://www.psychologytoday.com/us/therapists/intimacy-and-connection",
+            description: "Resources for improving intimacy and connection in relationships"
+          }
         ],
         youtubeQuery: "relationship+advice+and+couples+therapy",
         inspirationImage: "https://images.unsplash.com/photo-1516589091380-5d9e5bdbd0f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
@@ -446,14 +692,66 @@
         description: "Dealing with internal struggles like self-doubt, anxiety, or sadness? Find encouragement and strategies to overcome personal battles.",
         image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
         solutions: [
-          "Practice daily mindfulness and meditation exercises",
-          "Learn stress management and anxiety reduction techniques",
-          "Access professional mental health resources and support",
-          "Discover self-improvement strategies and personal growth tools",
-          "Explore journaling prompts for self-reflection",
-          "Get tips for building self-confidence and self-esteem",
-          "Learn about emotional intelligence and self-awareness",
-          "Discover ways to overcome negative thought patterns"
+          {
+            title: "Self-Care Routine",
+            description: "Develop a consistent self-care routine to improve mental and emotional well-being.",
+            steps: [
+              "Establish a daily routine",
+              "Practice mindfulness meditation",
+              "Get regular exercise",
+              "Maintain a healthy sleep schedule",
+              "Engage in activities you enjoy"
+            ]
+          },
+          {
+            title: "Emotional Management",
+            description: "Learn techniques to manage emotions and reduce anxiety effectively.",
+            steps: [
+              "Identify emotional triggers",
+              "Practice deep breathing exercises",
+              "Keep a mood journal",
+              "Develop coping strategies",
+              "Seek professional help when needed"
+            ]
+          },
+          {
+            title: "Personal Growth",
+            description: "Focus on personal development and building self-confidence.",
+            steps: [
+              "Set achievable goals",
+              "Celebrate small victories",
+              "Learn new skills",
+              "Build a support network",
+              "Practice positive self-talk"
+            ]
+          }
+        ],
+        references: [
+          {
+            title: "Mental Health Resources",
+            url: "https://www.mentalhealth.gov/resources",
+            description: "Government resources for mental health"
+          },
+          {
+            title: "Self-Improvement Books",
+            url: "https://www.goodreads.com/shelf/show/self-improvement",
+            description: "Books on self-improvement and personal growth"
+          },
+          {
+            title: "Mental Health Apps",
+            url: "https://www.betterhelp.com/mental-health-apps",
+            description: "Mental health apps for self-care and support"
+          },
+          {
+            title: "Mental Health Blogs",
+            url: "https://www.psychologytoday.com/us/blog",
+            description: "Mental health blogs and articles"
+          },
+          {
+            title: "Mental Health Forums",
+            url: "https://www.reddit.com/r/mentalhealth",
+            description: "Mental health forums and communities"
+          }
         ],
         youtubeQuery: "mental+health+and+personal+development",
         inspirationImage: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
@@ -462,16 +760,68 @@
       {
         title: "Study Problem",
         description: "School stress and academic pressure can take a toll. Here you'll find tools for better concentration, motivation, and stress relief.",
-        image: "https://images.unsplash.com/photo-1503676260728-1c601da9a5e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        image: "data:image/jpeg;base64,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",
         solutions: [
-          "Master effective study techniques and time management",
-          "Learn memory improvement and concentration exercises",
-          "Access academic support and tutoring resources",
-          "Discover stress management techniques for students",
-          "Get tips for exam preparation and test-taking strategies",
-          "Learn about different learning styles and study methods",
-          "Explore productivity tools and apps for students",
-          "Understand how to maintain work-life balance while studying"
+          {
+            title: "Study Techniques",
+            description: "Implement effective study methods to improve learning and retention.",
+            steps: [
+              "Use the Pomodoro technique",
+              "Create a study schedule",
+              "Take regular breaks",
+              "Use active recall methods",
+              "Teach others what you learn"
+            ]
+          },
+          {
+            title: "Time Management",
+            description: "Develop better time management skills to balance study and personal life.",
+            steps: [
+              "Create a weekly planner",
+              "Set realistic goals",
+              "Prioritize tasks",
+              "Avoid procrastination",
+              "Review and adjust regularly"
+            ]
+          },
+          {
+            title: "Stress Management",
+            description: "Learn techniques to manage academic stress and maintain well-being.",
+            steps: [
+              "Practice relaxation techniques",
+              "Maintain a healthy lifestyle",
+              "Get enough sleep",
+              "Stay organized",
+              "Seek support when needed"
+            ]
+          }
+        ],
+        references: [
+          {
+            title: "Study Skills",
+            url: "https://www.mindtools.com/study-skills",
+            description: "Study skills resources and tips"
+          },
+          {
+            title: "Academic Success",
+            url: "https://www.collegeboard.org/student/academic-success",
+            description: "Resources for academic success"
+          },
+          {
+            title: "Time Management",
+            url: "https://www.mindtools.com/time-management",
+            description: "Time management resources and tips"
+          },
+          {
+            title: "Productivity Tools",
+            url: "https://www.productivity.com/tools",
+            description: "Productivity tools and apps"
+          },
+          {
+            title: "Work-Life Balance",
+            url: "https://www.psychologytoday.com/us/blog/work-life-balance",
+            description: "Work-life balance resources and tips"
+          }
         ],
         youtubeQuery: "study+techniques+and+academic+success",
         inspirationImage: "https://images.unsplash.com/photo-1503676260728-1c601da9a5e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
@@ -482,14 +832,66 @@
         description: "Your health matters — both mental and physical. Explore well-rounded guides to living healthier and happier every day.",
         image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
         solutions: [
-          "Create personalized nutrition and exercise plans",
-          "Learn about mental health improvement strategies",
-          "Access professional healthcare resources and support",
-          "Discover stress reduction and relaxation techniques",
-          "Get tips for better sleep and energy management",
-          "Learn about preventive healthcare and wellness",
-          "Explore mindfulness and meditation practices",
-          "Understand how to build healthy habits and routines"
+          {
+            title: "Physical Health",
+            description: "Develop habits for better physical health and well-being.",
+            steps: [
+              "Exercise regularly",
+              "Eat a balanced diet",
+              "Stay hydrated",
+              "Get enough sleep",
+              "Schedule regular check-ups"
+            ]
+          },
+          {
+            title: "Mental Wellness",
+            description: "Focus on mental health and emotional well-being.",
+            steps: [
+              "Practice mindfulness",
+              "Manage stress effectively",
+              "Build healthy relationships",
+              "Set boundaries",
+              "Seek professional help when needed"
+            ]
+          },
+          {
+            title: "Lifestyle Changes",
+            description: "Make sustainable lifestyle changes for long-term health.",
+            steps: [
+              "Create healthy routines",
+              "Reduce screen time",
+              "Spend time in nature",
+              "Practice gratitude",
+              "Stay socially connected"
+            ]
+          }
+        ],
+        references: [
+          {
+            title: "Nutrition",
+            url: "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/healthy-eating/art-20046848",
+            description: "Nutrition and healthy eating resources"
+          },
+          {
+            title: "Exercise",
+            url: "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/exercise/art-20046846",
+            description: "Exercise resources and tips"
+          },
+          {
+            title: "Mental Health",
+            url: "https://www.mayoclinic.org/healthy-lifestyle/mental-health/in-depth/mental-health/art-20046844",
+            description: "Mental health resources and information"
+          },
+          {
+            title: "Wellness",
+            url: "https://www.mayoclinic.org/healthy-lifestyle/wellness/in-depth/wellness/art-20046842",
+            description: "Wellness resources and information"
+          },
+          {
+            title: "Health Tips",
+            url: "https://www.health.com/health-tips",
+            description: "Health tips and advice"
+          }
         ],
         youtubeQuery: "health+and+wellness+tips",
         inspirationImage: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
@@ -525,33 +927,52 @@
       const problemPage = document.getElementById("problemPage");
       problemPage.classList.add("active");
 
-      let solutionHTML = problem.solutions.map(sol => `
-        <li>
-          <i class="fas fa-check-circle"></i>
-          <span>${sol}</span>
-        </li>
+      let solutionsHTML = problem.solutions.map(solution => `
+        <div class="solution-card">
+          <h3><i class="fas fa-lightbulb"></i> ${solution.title}</h3>
+          <p>${solution.description}</p>
+          <ul>
+            ${solution.steps.map(step => `
+              <li><i class="fas fa-check"></i> ${step}</li>
+            `).join('')}
+          </ul>
+        </div>
+      `).join('');
+
+      let referencesHTML = problem.references.map(ref => `
+        <div class="reference-card">
+          <h4><i class="fas fa-link"></i> ${ref.title}</h4>
+          <p>${ref.description}</p>
+          <a href="${ref.url}" target="_blank" class="reference-link">View Resource <i class="fas fa-external-link-alt"></i></a>
+        </div>
       `).join('');
 
       document.getElementById("problemContent").innerHTML = `
         <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; background: linear-gradient(45deg, #6366f1, #4f46e5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${problem.title}</h2>
-        <img src="${problem.image}" style="width:100%; height:300px; object-fit:cover; border-radius:1.5rem; margin:1.5rem 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);"/>
+        <div style="width: 100%; height: 400px; display: flex; justify-content: center; align-items: center; background-color: rgba(44, 44, 44, 0.5); border-radius: 1.5rem; margin: 1.5rem 0; padding: 1rem;">
+          <img src="${problem.image}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 1rem;"/>
+        </div>
         <p style="margin-bottom:2rem; font-size: 1.1rem; line-height: 1.6; color: #bbb;">${problem.description}</p>
+        
         <div class="solution-section">
-          <h2>Solutions & Resources</h2>
-          <ul>${solutionHTML}</ul>
-          <div style="margin: 2rem 0;">
-            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Solution Visualization</h3>
-            <img src="${problem.visualizationImage}" style="width:100%; height:300px; object-fit:cover; border-radius:1.5rem; margin-top: 1rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);"/>
-          </div>
-          <div style="margin: 2rem 0;">
-            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Inspiration Image</h3>
-            <img src="${problem.inspirationImage}" style="width:100%; height:300px; object-fit:cover; border-radius:1.5rem; margin-top: 1rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);"/>
-          </div>
-          <div class="video-session">
-            <p><strong><i class="fas fa-video"></i> Video Sessions</strong> – <a href="https://youtube.com/results?search_query=${problem.youtubeQuery}" target="_blank" onclick="handleYoutubeClick('${problem.title}')">Watch on YouTube</a></p>
-            <p style="margin-top: 1rem;"><strong><i class="fas fa-user-md"></i> Talk to a Therapist</strong> – <a href="#" onclick="openTherapyPage()">Book 1-1 Session</a></p>
+          <h2><i class="fas fa-puzzle-piece"></i> Solutions</h2>
+          <div class="solutions-grid">
+            ${solutionsHTML}
           </div>
         </div>
+
+        <div class="references-section">
+          <h2><i class="fas fa-book"></i> References & Resources</h2>
+          <div class="references-grid">
+            ${referencesHTML}
+          </div>
+        </div>
+
+        <div class="video-session">
+          <p><strong><i class="fas fa-video"></i> Video Sessions</strong> – <a href="https://youtube.com/results?search_query=${problem.youtubeQuery}" target="_blank" onclick="handleYoutubeClick('${problem.title}')">Watch on YouTube</a></p>
+          <p style="margin-top: 1rem;"><strong><i class="fas fa-user-md"></i> Talk to a Therapist</strong> – <a href="#" onclick="openTherapyPage()">Book 1-1 Session</a></p>
+        </div>
+
         <div class="review-section">
           <h2>Rate & Review</h2>
           <div class="rating-stars">
@@ -561,8 +982,12 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
           </div>
-          <textarea rows="4" placeholder="Write your feedback..."></textarea>
-          <button>Submit Feedback</button>
+          <textarea id="feedbackText" rows="4" placeholder="Write your feedback..."></textarea>
+          <button onclick="submitFeedback()">Submit Feedback</button>
+        </div>
+        <div class="feedback-message">
+          <i class="fas fa-check-circle"></i>
+          <span>Feedback submitted successfully!</span>
         </div>
         <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
       `;
@@ -665,6 +1090,16 @@
         description: "Helping clients achieve personal growth and professional success through strategic life coaching."
       }
     ];
+
+    function submitFeedback() {
+      const feedbackMessage = document.querySelector('.feedback-message');
+      feedbackMessage.style.display = 'flex';
+      feedbackMessage.style.alignItems = 'center';
+      
+      setTimeout(() => {
+        feedbackMessage.style.display = 'none';
+      }, 3000);
+    }
   </script>
 </body>
 
