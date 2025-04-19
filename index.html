@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnyHelp.com</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1f1f1f 0%, #2c2c2c 100%);
+      color: #e5e5e5;
+      min-height: 100vh;
+    }
+
+    .login-page, .dashboard, .problem-page {
+      display: none;
+      padding: 2rem;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .active {
+      display: block;
+    }
+
+    .login-container {
+      max-width: 400px;
+      margin: 10vh auto;
+      background: rgba(44, 44, 44, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      background: linear-gradient(45deg, #6366f1, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    input, button, textarea {
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 1rem;
+      background-color: rgba(58, 58, 58, 0.5);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #bbb;
+    }
+
+    button {
+      background: linear-gradient(45deg, #6366f1, #4f46e5);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      margin-top: 1.5rem;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+    }
+
+    .dashboard {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .dashboard h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #6366f1, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .dashboard p {
+      font-size: 1.1rem;
+      color: #bbb;
+      margin-bottom: 2rem;
+    }
+
+    .problems {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .problem-card {
+      background: rgba(44, 44, 44, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(50px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .problem-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .problem-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .problem-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .problem-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .problem-content {
+      padding: 1.5rem;
+    }
+
+    .problem-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .problem-content p {
+      color: #bbb;
+      line-height: 1.6;
+    }
+
+    .solution-section {
+      margin-top: 2rem;
+      background: rgba(44, 44, 44, 0.8);
+      padding: 2rem;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .solution-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, #6366f1, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .solution-section ul {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .solution-section ul li {
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      position: relative;
+      padding-left: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: rgba(44, 44, 44, 0.5);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .solution-section ul li i {
+      color: #6366f1;
+      font-size: 1.2rem;
+      margin-top: 0.2rem;
+    }
+
+    .solution-section ul li span {
+      flex: 1;
+    }
+
+    .back-button {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(99, 102, 241, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 0.8rem;
+      border-radius: 1rem;
+      font-size: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .back-button:hover {
+      background: rgba(79, 70, 229, 0.9);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+    }
+
+    .back-button i {
+      font-size: 0.9rem;
+    }
+
+    .review-section {
+      margin-top: 3rem;
+      background: rgba(44, 44, 44, 0.8);
+      padding: 2rem;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .review-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, #6366f1, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .rating-stars {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .rating-stars i {
+      color: #6366f1;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .rating-stars i:hover {
+      transform: scale(1.2);
+    }
+
+    .video-session {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 1rem;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .video-session a {
+      color: #6366f1;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .video-session a:hover {
+      color: #4f46e5;
+      text-decoration: underline;
+    }
+
+    .therapy-page {
+      display: none;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .therapy-page.active {
+      display: block;
+    }
+
+    .therapist-card {
+      background: rgba(44, 44, 44, 0.8);
+      border-radius: 1rem;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .therapist-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .therapist-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .therapist-info {
+      padding: 1.5rem;
+    }
+
+    .therapist-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .therapist-specialty {
+      color: #6366f1;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .therapist-price {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .therapist-description {
+      color: #bbb;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .book-button {
+      background: linear-gradient(45deg, #6366f1, #4f46e5);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .book-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Login Page -->
+  <div class="login-page active">
+    <div class="login-container">
+      <h2>Login to AnyHelp.com</h2>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+    </div>
+  </div>
+
+  <!-- Dashboard Page -->
+  <div class="dashboard">
+    <h1>Welcome to AnyHelp.com</h1>
+    <p>Select a problem to explore resources and support.</p>
+    <div class="problems" id="problems"></div>
+  </div>
+
+  <!-- Problem Details Page -->
+  <div class="problem-page" id="problemPage">
+    <button class="back-button" onclick="goBack()">⬅</button>
+    <div id="problemContent"></div>
+  </div>
+
+  <!-- Therapy Page -->
+  <div class="therapy-page">
+    <h2>Available Therapists</h2>
+    <div class="therapists-grid">
+      <!-- Therapist cards will be dynamically added here -->
+    </div>
+    <button class="back-button" onclick="goBackToProblem()"><i class="fas fa-arrow-left"></i> Back</button>
+  </div>
+
+  <script>
+    const problems = [
+      {
+        title: "Financial Problem",
+        description: "Facing financial stress can affect every part of your life. Explore practical tools, budgeting ideas, and emotional support resources to manage financial worries effectively.",
+        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        solutions: [
+          "Create a detailed budget plan with our interactive budgeting tool",
+          "Learn about debt consolidation strategies and financial planning",
+          "Access government programs and community resources for financial help",
+          "Discover investment strategies for long-term financial stability",
+          "Get personalized financial advice from certified experts",
+          "Learn about emergency fund management and savings techniques",
+          "Explore side hustle opportunities to increase income",
+          "Understand credit score improvement strategies"
+        ],
+        youtubeQuery: "financial+management+and+debt+relief+strategies",
+        inspirationImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        visualizationImage: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      },
+      {
+        title: "Relationship Problem",
+        description: "Strained relationships can lead to emotional distress. Access tools for healthy communication, rebuilding trust, and working through conflicts.",
+        image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        solutions: [
+          "Learn effective communication techniques for better relationships",
+          "Discover strategies for rebuilding trust and intimacy",
+          "Access professional relationship counseling resources",
+          "Explore conflict resolution methods and techniques",
+          "Understand attachment styles and their impact on relationships",
+          "Get tips for maintaining long-distance relationships",
+          "Learn about healthy boundaries and self-care in relationships",
+          "Discover ways to rekindle romance and connection"
+        ],
+        youtubeQuery: "relationship+advice+and+couples+therapy",
+        inspirationImage: "https://images.unsplash.com/photo-1516589091380-5d9e5bdbd0f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        visualizationImage: "https://images.unsplash.com/photo-1516589091380-5d9e5bdbd0f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      },
+      {
+        title: "Personal Problem",
+        description: "Dealing with internal struggles like self-doubt, anxiety, or sadness? Find encouragement and strategies to overcome personal battles.",
+        image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        solutions: [
+          "Practice daily mindfulness and meditation exercises",
+          "Learn stress management and anxiety reduction techniques",
+          "Access professional mental health resources and support",
+          "Discover self-improvement strategies and personal growth tools",
+          "Explore journaling prompts for self-reflection",
+          "Get tips for building self-confidence and self-esteem",
+          "Learn about emotional intelligence and self-awareness",
+          "Discover ways to overcome negative thought patterns"
+        ],
+        youtubeQuery: "mental+health+and+personal+development",
+        inspirationImage: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        visualizationImage: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      },
+      {
+        title: "Study Problem",
+        description: "School stress and academic pressure can take a toll. Here you'll find tools for better concentration, motivation, and stress relief.",
+        image: "https://images.unsplash.com/photo-1503676260728-1c601da9a5e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        solutions: [
+          "Master effective study techniques and time management",
+          "Learn memory improvement and concentration exercises",
+          "Access academic support and tutoring resources",
+          "Discover stress management techniques for students",
+          "Get tips for exam preparation and test-taking strategies",
+          "Learn about different learning styles and study methods",
+          "Explore productivity tools and apps for students",
+          "Understand how to maintain work-life balance while studying"
+        ],
+        youtubeQuery: "study+techniques+and+academic+success",
+        inspirationImage: "https://images.unsplash.com/photo-1503676260728-1c601da9a5e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        visualizationImage: "https://images.unsplash.com/photo-1503676260728-1c601da9a5e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      },
+      {
+        title: "Health Problem",
+        description: "Your health matters — both mental and physical. Explore well-rounded guides to living healthier and happier every day.",
+        image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        solutions: [
+          "Create personalized nutrition and exercise plans",
+          "Learn about mental health improvement strategies",
+          "Access professional healthcare resources and support",
+          "Discover stress reduction and relaxation techniques",
+          "Get tips for better sleep and energy management",
+          "Learn about preventive healthcare and wellness",
+          "Explore mindfulness and meditation practices",
+          "Understand how to build healthy habits and routines"
+        ],
+        youtubeQuery: "health+and+wellness+tips",
+        inspirationImage: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        visualizationImage: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      }
+    ];
+
+    const problemsContainer = document.getElementById("problems");
+
+    problems.forEach((problem, index) => {
+      const card = document.createElement("div");
+      card.className = "problem-card";
+      card.onclick = () => openProblem(index);
+      card.innerHTML = `
+        <img src="${problem.image}" alt="${problem.title}" />
+        <div class="problem-content">
+          <h3>${problem.title}</h3>
+          <p>${problem.description}</p>
+        </div>
+      `;
+      problemsContainer.appendChild(card);
+    });
+
+    function login() {
+      document.querySelector(".login-page").classList.remove("active");
+      document.querySelector(".dashboard").classList.add("active");
+      revealOnScroll();
+    }
+
+    function openProblem(index) {
+      const problem = problems[index];
+      document.querySelector(".dashboard").classList.remove("active");
+      const problemPage = document.getElementById("problemPage");
+      problemPage.classList.add("active");
+
+      let solutionHTML = problem.solutions.map(sol => `
+        <li>
+          <i class="fas fa-check-circle"></i>
+          <span>${sol}</span>
+        </li>
+      `).join('');
+
+      document.getElementById("problemContent").innerHTML = `
+        <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; background: linear-gradient(45deg, #6366f1, #4f46e5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${problem.title}</h2>
+        <img src="${problem.image}" style="width:100%; height:300px; object-fit:cover; border-radius:1.5rem; margin:1.5rem 0; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);"/>
+        <p style="margin-bottom:2rem; font-size: 1.1rem; line-height: 1.6; color: #bbb;">${problem.description}</p>
+        <div class="solution-section">
+          <h2>Solutions & Resources</h2>
+          <ul>${solutionHTML}</ul>
+          <div style="margin: 2rem 0;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Solution Visualization</h3>
+            <img src="${problem.visualizationImage}" style="width:100%; height:300px; object-fit:cover; border-radius:1.5rem; margin-top: 1rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);"/>
+          </div>
+          <div style="margin: 2rem 0;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Inspiration Image</h3>
+            <img src="${problem.inspirationImage}" style="width:100%; height:300px; object-fit:cover; border-radius:1.5rem; margin-top: 1rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);"/>
+          </div>
+          <div class="video-session">
+            <p><strong><i class="fas fa-video"></i> Video Sessions</strong> – <a href="https://youtube.com/results?search_query=${problem.youtubeQuery}" target="_blank" onclick="handleYoutubeClick('${problem.title}')">Watch on YouTube</a></p>
+            <p style="margin-top: 1rem;"><strong><i class="fas fa-user-md"></i> Talk to a Therapist</strong> – <a href="#" onclick="openTherapyPage()">Book 1-1 Session</a></p>
+          </div>
+        </div>
+        <div class="review-section">
+          <h2>Rate & Review</h2>
+          <div class="rating-stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <textarea rows="4" placeholder="Write your feedback..."></textarea>
+          <button>Submit Feedback</button>
+        </div>
+        <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+      `;
+    }
+
+    function handleYoutubeClick(problemTitle) {
+      // Store the problem title in localStorage for the YouTube page to use
+      localStorage.setItem('currentProblem', problemTitle);
+      
+      // You can add additional logic here to track the click or show a loading state
+      console.log(`Opening YouTube for ${problemTitle}`);
+    }
+
+    function openTherapyPage() {
+      document.querySelector(".problem-page").classList.remove("active");
+      const therapyPage = document.querySelector(".therapy-page");
+      therapyPage.classList.add("active");
+
+      let therapistHTML = therapists.map(therapist => `
+        <div class="therapist-card">
+          <img src="${therapist.image}" class="therapist-image" alt="${therapist.name}">
+          <div class="therapist-info">
+            <h3>${therapist.name}</h3>
+            <div class="therapist-specialty">${therapist.specialty}</div>
+            <div class="therapist-price">${therapist.price}</div>
+            <p class="therapist-description">${therapist.description}</p>
+            <button class="book-button" onclick="bookSession('${therapist.name}')">Book Session</button>
+          </div>
+        </div>
+      `).join('');
+
+      therapyPage.innerHTML = `
+        <h2 style="font-size: 2.5rem; margin-bottom: 2rem; background: linear-gradient(45deg, #6366f1, #4f46e5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Available Therapists</h2>
+        <div class="therapists-grid">
+          ${therapistHTML}
+        </div>
+        <button class="back-button" onclick="goBackToProblem()"><i class="fas fa-arrow-left"></i> Back</button>
+      `;
+    }
+
+    function bookSession(therapistName) {
+      alert(`Booking session with ${therapistName}. Please check your email for confirmation.`);
+    }
+
+    function goBackToProblem() {
+      document.querySelector(".therapy-page").classList.remove("active");
+      document.querySelector(".problem-page").classList.add("active");
+    }
+
+    function goBack() {
+      document.querySelector(".problem-page").classList.remove("active");
+      document.querySelector(".dashboard").classList.add("active");
+    }
+
+    function revealOnScroll() {
+      const cards = document.querySelectorAll('.problem-card');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      cards.forEach(card => {
+        observer.observe(card);
+      });
+    }
+
+    const therapists = [
+      {
+        name: "Dr. Sarah Johnson",
+        specialty: "Clinical Psychologist",
+        price: "₹2,500/session",
+        image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        description: "Specialized in cognitive-behavioral therapy with 10+ years of experience helping clients overcome anxiety and depression."
+      },
+      {
+        name: "Michael Chen",
+        specialty: "Relationship Counselor",
+        price: "₹2,000/session",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        description: "Expert in couples therapy and family counseling, helping relationships thrive through effective communication."
+      },
+      {
+        name: "Dr. Emily Rodriguez",
+        specialty: "Trauma Specialist",
+        price: "₹3,000/session",
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        description: "Specialized in trauma recovery and PTSD treatment, using evidence-based approaches for healing."
+      },
+      {
+        name: "James Wilson",
+        specialty: "Life Coach",
+        price: "₹1,800/session",
+        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        description: "Helping clients achieve personal growth and professional success through strategic life coaching."
+      }
+    ];
+  </script>
+</body>
+
+</html>
